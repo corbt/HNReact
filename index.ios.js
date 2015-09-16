@@ -6,48 +6,42 @@
 
 var React = require('react-native');
 var {
+  Component,
   AppRegistry,
-  StyleSheet,
   Text,
   View,
+  Navigator,
+  ToolbarAndroid,
+  BackAndroid
 } = React;
 
-var HNReact = React.createClass({
-  render: function() {
+var Index = require('./components/index');
+
+class HNReact extends Component {
+  constructor() {
+    super();
+    BackAndroid.addEventListener("hardwareBackPress", (e) => { console.log("back!!"); return true })
+  }
+
+  render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+      <Navigator
+        initialRoute={{name: 'Index', component: Index}}
+        navigationBar={<ToolbarAndroid />}
+        renderScene={(route, navigator) => {
+          console.log({route, navigator});
+          if(route.component) {
+            return React.createElement(route.component, { navigator, ...route.passProps })
+          }
+        }}
+      ></Navigator>
     );
   }
-});
 
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+  _handleBackButtonPress() {
+    console.log("back!!!")
+    this.props.navigator.pop();
+  }
+}
 
 AppRegistry.registerComponent('HNReact', () => HNReact);
