@@ -4,11 +4,6 @@
  */
 'use strict';
 
-var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
-RCTDeviceEventEmitter.addListener('hardwareBackPress', function() {
-  console.log("pressed!")
-});
-
 var React = require('react-native');
 var {
   Component,
@@ -22,18 +17,23 @@ var {
 
 var Index = require('./components/index');
 
-class HNReact extends Component {
-  constructor() {
-    super();
-    BackAndroid.addEventListener("hardwareBackPress", (e) => { console.log("back!!"); return true })
+var _navigator;
+BackAndroid.addEventListener('hardwareBackPress', () => {
+  if (_navigator && _navigator.getCurrentRoutes().length > 1) {
+    _navigator.pop();
+    return true;
   }
+  return false;
+});
 
+class HNReact extends Component {
   render() {
     return (
       <Navigator
         initialRoute={{name: 'Index', component: Index}}
         navigationBar={<ToolbarAndroid />}
         renderScene={(route, navigator) => {
+          _navigator = navigator;
           console.log({route, navigator});
           if(route.component) {
             return React.createElement(route.component, { navigator, ...route.passProps })
@@ -41,11 +41,6 @@ class HNReact extends Component {
         }}
       ></Navigator>
     );
-  }
-
-  _handleBackButtonPress() {
-    console.log("back!!!")
-    this.props.navigator.pop();
   }
 }
 

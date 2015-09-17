@@ -4,12 +4,13 @@ var {
   Component,
   View,
   WebView,
+  Text,
 } = React;
 
 module.exports = class Article extends Component {
   render() {
     return (
-      <View><WebView url={this.props.story.url} /></View>
+      <Text>{this.props.story.url}+{__DEV__.toString()}</Text>
     );
   }
 
