@@ -1,21 +1,19 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
-'use strict';
+/* @flow */
 
 var React = require('react-native');
 var {
   Component,
   AppRegistry,
   Text,
-  View,
   Navigator,
   ToolbarAndroid,
   BackAndroid
 } = React;
 
 var Index = require('./components/index');
+var store = require('./state/store');
+
+var { Provider } = require('react-redux/native');
 
 var _navigator;
 BackAndroid.addEventListener('hardwareBackPress', () => {
@@ -26,20 +24,24 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
   return false;
 });
 
+        // navigationBar={<ToolbarAndroid />}
+
 class HNReact extends Component {
   render() {
     return (
-      <Navigator
-        initialRoute={{name: 'Index', component: Index}}
-        navigationBar={<ToolbarAndroid />}
-        renderScene={(route, navigator) => {
-          _navigator = navigator;
-          console.log({route, navigator});
-          if(route.component) {
-            return React.createElement(route.component, { navigator, ...route.passProps })
-          }
-        }}
-      ></Navigator>
+      <Provider store={store}>
+        {() => 
+          <Navigator
+            initialRoute={{name: 'Index', component: Index}}
+            renderScene={(route, navigator) => {
+              _navigator = navigator;
+              if(route.component) {
+                return React.createElement(route.component, { navigator, ...route.passProps })
+              }
+            }}
+          />
+        }
+      </Provider>
     );
   }
 }

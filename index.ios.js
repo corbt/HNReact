@@ -20,7 +20,6 @@ var Index = require('./components/index');
 class HNReact extends Component {
   constructor() {
     super();
-    BackAndroid.addEventListener("hardwareBackPress", (e) => { console.log("back!!"); return true })
   }
 
   render() {
@@ -29,18 +28,12 @@ class HNReact extends Component {
         initialRoute={{name: 'Index', component: Index}}
         navigationBar={<ToolbarAndroid />}
         renderScene={(route, navigator) => {
-          console.log({route, navigator});
           if(route.component) {
             return React.createElement(route.component, { navigator, ...route.passProps })
           }
         }}
       ></Navigator>
     );
-  }
-
-  _handleBackButtonPress() {
-    console.log("back!!!")
-    this.props.navigator.pop();
   }
 }
 

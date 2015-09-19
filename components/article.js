@@ -13,9 +13,4 @@ module.exports = class Article extends Component {
       <Text>{this.props.story.url}+{__DEV__.toString()}</Text>
     );
   }
-
-  _handleBackButtonPress() {
-    console.log("back pressed?")
-    this.props.navigator.pop();
-  }
 }
