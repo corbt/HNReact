@@ -14,6 +14,9 @@
 .*/node_modules/react-tools/src/renderers/shared/event/eventPlugins/ResponderEventPlugin.js
 .*/node_modules/react-tools/src/shared/vendor/core/ExecutionEnvironment.js
 
+# Ignore definitions that appear to collide with react-native
+.*/node_modules/react/.*
+.*/node_modules/react-redux/node_modules/invariant/.*
 
 # Ignore commoner tests
 .*/node_modules/commoner/test/.*
