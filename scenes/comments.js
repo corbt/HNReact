@@ -6,7 +6,7 @@ var {
   View,
   WebView,
   Text,
-  TouchableHighlight,
+  TouchableNativeFeedback,
   ScrollView,
   StyleSheet
 } = React;
@@ -17,7 +17,7 @@ var Article = require('./article');
 
 var ItemSummary = require('../components/ItemSummary');
 
-// type testTypes = 
+// type testTypes =
 
 class Comment extends Component {
   props: {
@@ -25,21 +25,44 @@ class Comment extends Component {
     topLevel: boolean
   };
   static defaultProps: {};
+
+  constructor() {
+    super();
+    this.state = { collapsed: false };
+  }
+
   render() {
-    return <View style={[commentStyles.base, this.props.topLevel && commentStyles.topLevel]}>
-      <View style={{flexDirection: 'row'}}>
-        <Text style={{flex: 1, fontSize: 15, color: '#bf223f', fontWeight: 'bold'}}>{this.props.comment.user}</Text>
-        <Text style={{}}>{this.props.comment.time_ago}</Text>
+    return (<TouchableNativeFeedback onPress={() => this.setState({collapsed: !this.state.collapsed})}>
+      <View style={[commentStyles.commentBase, this.props.topLevel && commentStyles.commentTopLevel]}>
+        <View style={{flexDirection: 'row', paddingBottom: 5}}>
+          <Text style={{flex: 1, fontSize: 15, color: '#bf223f', fontWeight: 'bold'}}>{this.props.comment.user}</Text>
+          <Text>{this.props.comment.time_ago}</Text>
+        </View>
+        <View style={this.state.collapsed && {height: 40}}>
+          <View style={this.state.collapsed && {opacity: 0.1}}>
+            <Text style={{color: 'black'}}>{this.props.comment.content}</Text>
+            <View style={{paddingLeft: 10, paddingBottom: 10}}>
+              {this.props.comment.comments.map(c => <Comment comment={c} key={c.id} />)}
+            </View>
+          </View>
+          {this.state.collapsed &&
+            <View style={{position: 'absolute', right: 0, left: 0, top: 0, bottom: 0, alignItems: 'center', justifyContent: 'center'}}>
+              <Text style={{color: 'black', fontSize: 30}}>&bull;&bull;&bull;</Text>
+            </View>
+          }
+        </View>
       </View>
-      <Text style={{color: 'black'}}>{this.props.comment.content}</Text>
-      <View style={{paddingLeft: 10}}>
-        {this.props.comment.comments.map(c => <Comment comment={c} />)}
-      </View>
-    </View>;
+    </TouchableNativeFeedback>);
   }
 }
 
 class Comments extends Component {
+  props: {
+    story: Story,
+    navigator: any
+  };
+  static defaultProps: {};
+
   showStory(story: Story) {
     this.props.navigator.push({
       component: Article,
@@ -48,10 +71,10 @@ class Comments extends Component {
   }
 
   render() {
-    return <View style={{flex: 1, backgroundColor: 'white'}}>
+    return <View style={{flex: 1}}>
         <ItemSummary story={this.props.story} showStory={this.showStory.bind(this)} />
         <ScrollView style={{flex: 1}}>
-          {this.props.story.comments.map(c => <Comment comment={c} topLevel={true} />)}
+          {this.props.story.comments.map(c => <Comment comment={c} key={c.id} topLevel={true} />)}
         </ScrollView>
       </View>;
   }
@@ -60,14 +83,14 @@ class Comments extends Component {
 module.exports = connect(state => state.toJS())(Comments);
 
 var commentStyles = StyleSheet.create({
-  base: {
+  commentBase: {
     paddingTop: 10,
-    paddingBottom: 10
+    backgroundColor: 'white'
   },
-  topLevel: {
+  commentTopLevel: {
     borderBottomColor: 'gray',
     borderBottomWidth: 1,
     paddingRight: 10,
     paddingLeft: 10,
-  }
+  },
 })
