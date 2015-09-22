@@ -10,15 +10,17 @@ var reducer = require('./reducers');
 var actions = require('./actions');
 
 var logger = store => next => action => {
-  // console.groupCollapsed(action.type);
+  if(console.groupCollapsed)
+    console.groupCollapsed(action.type);
   console.info('dispatching', action);
   var result = next(action);
   console.log('next state', store.getState().toJS());
-  // console.groupEnd(action.type);
+  if(console.groupCollapsed)
+    console.groupEnd(action.type);
   return result;
 };
 
-var createStoreWithMiddleware = applyMiddleware(thunk, logger)(createStore);
+var createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
 var store = createStoreWithMiddleware(reducer);
 
