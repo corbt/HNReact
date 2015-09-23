@@ -24,13 +24,8 @@ function requestStory(storyId: number) {
 
     fetch(`http://node-hnapi.herokuapp.com/item/${storyId}`)
       .then(response => response.json())
-      .then((story: Story) => dispatch(updateStory, story.id, story));
+      .then((story: Story) => dispatch(updateStory(story.id, story)));
   }
-}
-
-var SET_TOP_STORIES = 'SET_TOP_STORIES';
-function setTopStories(topStories: Array<number> = [], isRefreshing: boolean = false) {
-
 }
 
 var UPDATE_STORY = 'UPDATE_STORY';
@@ -40,10 +35,11 @@ function updateStory(storyId: number, attributes: Object): Action {
 
 var SET_CURRENT_STORY = 'SET_CURRENT_STORY';
 function setCurrentStory(storyId: number) {
-
+  return { type: SET_CURRENT_STORY, value: storyId };
 }
 
 module.exports = {
   TOP_STORIES_REFRESHING, SET_TOP_STORIES, requestTopStories,
-  UPDATE_STORY,
+  UPDATE_STORY, requestStory,
+  SET_CURRENT_STORY, setCurrentStory,
 }

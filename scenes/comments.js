@@ -6,6 +6,7 @@ var {
   View,
   WebView,
   Text,
+  ToolbarAndroid,
   TouchableNativeFeedback,
   ScrollView,
   StyleSheet
@@ -16,8 +17,7 @@ var { connect } = require('react-redux/native');
 var Article = require('./article');
 
 var ItemSummary = require('../components/ItemSummary');
-
-// type testTypes =
+var { requestStory } = require('../state/actions');
 
 class Comment extends Component {
   props: {
@@ -59,9 +59,15 @@ class Comment extends Component {
 class Comments extends Component {
   props: {
     story: Story,
+    dispatch: any,
     navigator: any
   };
   static defaultProps: {};
+
+  constructor(props) {
+    super(props);
+    props.dispatch(requestStory(props.story.id));
+  }
 
   showStory(story: Story) {
     this.props.navigator.push({
@@ -72,15 +78,13 @@ class Comments extends Component {
 
   render() {
     return <View style={{flex: 1}}>
-        <ItemSummary story={this.props.story} showStory={this.showStory.bind(this)} />
+        <ItemSummary story={this.props.story} showStory={this.showStory.bind(this)} back={() => this.props.navigator.pop()} />
         <ScrollView style={{flex: 1}}>
-          {this.props.story.comments.map(c => <Comment comment={c} key={c.id} topLevel={true} />)}
+          {(this.props.story.comments || []).map(c => <Comment comment={c} key={c.id} topLevel={true} />)}
         </ScrollView>
       </View>;
   }
 }
-
-module.exports = connect(state => state.toJS())(Comments);
 
 var commentStyles = StyleSheet.create({
   commentBase: {
@@ -94,3 +98,8 @@ var commentStyles = StyleSheet.create({
     paddingLeft: 10,
   },
 })
+
+function mapStateToProps(state) {
+  return { story: state.getIn(['stories', state.get('currentStoryId')]).toJS() }
+}
+module.exports = connect(mapStateToProps)(Comments);

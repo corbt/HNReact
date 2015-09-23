@@ -17,15 +17,19 @@ var Comments = require('./comments');
 
 var ItemSummary = require('../components/ItemSummary');
 
+var { setCurrentStory } = require('../state/actions');
+
 class Index extends Component {
   showStory(story: Story) {
     this.props.navigator.push({
       component: Article,
       passProps: { story }
     });
+    this.props.dispatch(setCurrentStory(story.id));
   }
 
   showComments(story: Story) {
+    this.props.dispatch(setCurrentStory(story.id));
     this.props.navigator.push({
       component: Comments,
       passProps: { story }
@@ -35,10 +39,10 @@ class Index extends Component {
   render() {
     return (
       <ScrollView>
-        {this.props.topStories.stories.map(storyId => 
+        {this.props.topStories.stories.map(storyId =>
           {
             var story = this.props.stories[storyId];
-            return <ItemSummary story={story} key={story.id} 
+            return <ItemSummary story={story} key={story.id}
                       showStory={this.showStory.bind(this)}
                       showComments={this.showComments.bind(this)} />;
           })

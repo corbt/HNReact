@@ -25,8 +25,11 @@ function reducer(state: Immutable.Map = initialState(), action: Action) {
       return state.mergeIn(['topStories'], {stories: action.value, lastRefresh: new Date(), isRefreshing: false});
 
     case actions.UPDATE_STORY:
-      return state.updateIn(['stories', action.value.storyId], (val) => 
+      return state.updateIn(['stories', action.value.storyId], (val) =>
         (val || Immutable.Map()).merge(action.value.attributes));
+
+    case actions.SET_CURRENT_STORY:
+      return state.set('currentStoryId', action.value);
 
     default:
       console.warn(`Unhandled action ${JSON.stringify(action)}`);
