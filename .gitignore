@@ -29,3 +29,6 @@ npm-debug.log
 
 # android
 .gradle/
+.idea/
+*.iml
+local.properties
