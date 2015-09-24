@@ -15,7 +15,7 @@ function initialState(): Immutable.Map {
   });
 }
 
-function reducer(state: Immutable.Map = initialState(), action: Action) {
+function reducer(state: Immutable.Map = initialState(), action: Action): Immutable.Map {
   // console.log(state.toJS())
   switch(action.type) {
     case actions.TOP_STORIES_REFRESHING:

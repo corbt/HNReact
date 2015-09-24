@@ -18,8 +18,8 @@ function requestTopStories(): any {
   }
 }
 
-function requestStory(storyId: number) {
-  return(dispatch) => {
+function requestStory(storyId: number): (dispatch: any) => void {
+  return (dispatch) => {
     dispatch(updateStory(storyId, {isRefreshing: true}))
 
     fetch(`http://node-hnapi.herokuapp.com/item/${storyId}`)
@@ -34,7 +34,7 @@ function updateStory(storyId: number, attributes: Object): Action {
 }
 
 var SET_CURRENT_STORY = 'SET_CURRENT_STORY';
-function setCurrentStory(storyId: number) {
+function setCurrentStory(storyId: number): Action {
   return { type: SET_CURRENT_STORY, value: storyId };
 }
 
