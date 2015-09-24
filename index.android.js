@@ -10,10 +10,10 @@ var {
   BackAndroid
 } = React;
 
-var Index = require('./scenes/index');
-var Comments = require('./scenes/comments');
+var Index = require('./app/scenes/index');
+var Comments = require('./app/scenes/comments');
 
-var store = require('./state/store');
+var store = require('./app/state/store');
 
 var { Provider } = require('react-redux/native');
 
