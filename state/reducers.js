@@ -31,6 +31,9 @@ function reducer(state: Immutable.Map = initialState(), action: Action) {
     case actions.SET_CURRENT_STORY:
       return state.set('currentStoryId', action.value);
 
+    case "@@redux/INIT":
+      return state;
+
     default:
       console.warn(`Unhandled action ${JSON.stringify(action)}`);
       return state;

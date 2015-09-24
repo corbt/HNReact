@@ -20,7 +20,7 @@ var logger = store => next => action => {
   return result;
 };
 
-var createStoreWithMiddleware = applyMiddleware(thunk, logger)(createStore);
+var createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
 var store = createStoreWithMiddleware(reducer);
 
