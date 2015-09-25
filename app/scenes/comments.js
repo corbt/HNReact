@@ -9,7 +9,8 @@ var {
   ToolbarAndroid,
   TouchableNativeFeedback,
   ScrollView,
-  StyleSheet
+  StyleSheet,
+  ListView,
 } = React;
 
 var Immutable = require('immutable');
@@ -68,6 +69,10 @@ class Comments extends Component {
   constructor(props) {
     super(props);
     props.dispatch(requestStory(props.story.get('id')));
+
+    this.state = {
+      dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+    };
   }
 
   showStory(story) {
@@ -78,11 +83,13 @@ class Comments extends Component {
   }
 
   render() {
+    var dataSource = this.state.dataSource.cloneWithRows((this.props.story.get('comments') || Immutable.List()).toArray());
+
     return <View style={{flex: 1}}>
         <ItemSummary story={this.props.story} showStory={this.showStory.bind(this)} back={() => this.props.navigator.pop()} />
-        <ScrollView style={{flex: 1}}>
-          {(this.props.story.get('comments') || []).map(c => <Comment comment={c} key={c.get('id')} topLevel={true} />)}
-        </ScrollView>
+        <ListView style={{flex: 1}} dataSource={dataSource} renderRow={comment =>
+          <Comment comment={comment} key={comment.get('id')} topLevel={true} /> }>
+        </ListView>
       </View>;
   }
 }

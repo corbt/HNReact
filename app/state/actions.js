@@ -12,7 +12,6 @@ function requestTopStories(): any {
       .then(response => response.json())
       .then(json => {
         json.forEach(story => dispatch(updateStory(story.id, story)));
-
         dispatch({type: SET_TOP_STORIES, value: json.map(story => story.id)})
       });
   }

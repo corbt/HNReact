@@ -31,6 +31,7 @@ class Index extends Component {
       dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
     };
   }
+
   showStory(story) {
     this.props.navigator.push({
       component: Article,
@@ -50,7 +51,7 @@ class Index extends Component {
   render() {
     var dataSource = this.state.dataSource.cloneWithRows(this.props.store.getIn(['topStories', 'stories']).toJS().map(storyId => this.props.store.getIn(['stories', storyId])))
     return (
-      <ListView dataSource={dataSource} renderRow={(story) =>
+      <ListView dataSource={dataSource} renderRow={story =>
         <ItemSummary story={story} key={story.get('id')}
                   showStory={this.showStory.bind(this)}
                   showComments={this.showComments.bind(this)} />
