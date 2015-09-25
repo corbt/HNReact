@@ -10,10 +10,11 @@ var {
   Image,
 } = React;
 
+var Immutable = require('immutable');
 var { connect } = require('react-redux/native');
 
 type itemSummaryProps = {
-  story: Story,
+  story: Immutable.Map,
   showStory: (s: Story) => void,
   showComments: (s: Story) => void,
   back: () => void
@@ -36,7 +37,7 @@ class ItemSummary extends Component {
       var showComments = this.props.showComments;
       comments = <TouchableNativeFeedback onPress={() => showComments(this.props.story)}>
         <View style={{alignSelf: 'stretch', backgroundColor: '#FFCC8D', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', padding: 5}}>
-          <Text style={{fontSize: 30}}>{this.props.story.comments_count}</Text>
+          <Text style={{fontSize: 30}}>{this.props.story.get('comments_count')}</Text>
           <Text style={{fontSize: 10}}>COMMENTS</Text>
         </View>
       </TouchableNativeFeedback>
@@ -48,13 +49,13 @@ class ItemSummary extends Component {
         {backView}
         <TouchableNativeFeedback onPress={() => this.props.showStory(this.props.story)}>
           <View style={{flex: 1, padding: 10, justifyContent: 'center'}}>
-            <Text style={{fontSize: 15, color: 'black'}}>{this.props.story.title}</Text>
+            <Text style={{fontSize: 15, color: 'black'}}>{this.props.story.get('title')}</Text>
             <View style={{flexDirection: 'row'}}>
-              <Text>{this.props.story.points} points</Text>
+              <Text>{this.props.story.get('points')} points</Text>
               {separator}
-              <Text>{this.props.story.user}</Text>
+              <Text>{this.props.story.get('user')}</Text>
               {separator}
-              <Text>{this.props.story.time_ago}</Text>
+              <Text>{this.props.story.get('time_ago')}</Text>
             </View>
           </View>
         </TouchableNativeFeedback>

@@ -24,6 +24,4 @@ var createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
 var store = createStoreWithMiddleware(reducer);
 
-store.dispatch(actions.requestTopStories());
-
 module.exports = store;

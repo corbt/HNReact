@@ -8,6 +8,7 @@ var {
   View,
   TouchableHighlight,
   ScrollView,
+  ListView
 } = React;
 
 var { connect } = require('react-redux/native');
@@ -17,19 +18,26 @@ var Comments = require('./comments');
 
 var ItemSummary = require('../components/ItemSummary');
 
-var { setCurrentStory } = require('../state/actions');
+var { setCurrentStory, requestTopStories } = require('../state/actions');
 
 class Index extends Component {
-  showStory(story: Story) {
+  constructor(props) {
+    super(props);
+    console.log("OK, INDEX CONSTRUCTOR CALLED");
+
+    props.dispatch(requestTopStories());
+
+  }
+  showStory(story) {
     this.props.navigator.push({
       component: Article,
       passProps: { story }
     });
-    this.props.dispatch(setCurrentStory(story.id));
+    this.props.dispatch(setCurrentStory(story.get('id')));
   }
 
-  showComments(story: Story) {
-    this.props.dispatch(setCurrentStory(story.id));
+  showComments(story) {
+    this.props.dispatch(setCurrentStory(story.get('id')));
     this.props.navigator.push({
       component: Comments,
       passProps: { story }
@@ -39,10 +47,10 @@ class Index extends Component {
   render() {
     return (
       <ScrollView>
-        {this.props.topStories.stories.map(storyId =>
+        {this.props.store.getIn(['topStories', 'stories']).map(storyId =>
           {
-            var story = this.props.stories[storyId];
-            return <ItemSummary story={story} key={story.id}
+            var story = this.props.store.getIn(['stories', storyId]);
+            return <ItemSummary story={story} key={story.get('id')}
                       showStory={this.showStory.bind(this)}
                       showComments={this.showComments.bind(this)} />;
           })
@@ -52,4 +60,4 @@ class Index extends Component {
   }
 }
 
-module.exports = connect(state => state.toJS())(Index);
+module.exports = connect(store => { return { store } })(Index);

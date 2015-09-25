@@ -12,6 +12,7 @@ var {
   StyleSheet
 } = React;
 
+var Immutable = require('immutable');
 var { connect } = require('react-redux/native');
 
 var Article = require('./article');
@@ -21,7 +22,7 @@ var { requestStory } = require('../state/actions');
 
 class Comment extends Component {
   props: {
-    comment: CommentData,
+    comment: Immutable.Map,
     topLevel: boolean
   };
   static defaultProps: {};
@@ -35,14 +36,14 @@ class Comment extends Component {
     return (<TouchableNativeFeedback onPress={() => this.setState({collapsed: !this.state.collapsed})}>
       <View style={[commentStyles.commentBase, this.props.topLevel && commentStyles.commentTopLevel]}>
         <View style={{flexDirection: 'row', paddingBottom: 5}}>
-          <Text style={{flex: 1, fontSize: 15, color: '#bf223f', fontWeight: 'bold'}}>{this.props.comment.user}</Text>
+          <Text style={{flex: 1, fontSize: 15, color: '#bf223f', fontWeight: 'bold'}}>{this.props.comment.get('user')}</Text>
           <Text>{this.props.comment.time_ago}</Text>
         </View>
         <View style={this.state.collapsed && {height: 40}}>
           <View style={this.state.collapsed && {opacity: 0.1}}>
-            <Text style={{color: 'black'}}>{this.props.comment.content}</Text>
+            <Text style={{color: 'black'}}>{this.props.comment.get('content')}</Text>
             <View style={{paddingLeft: 10, paddingBottom: 10}}>
-              {this.props.comment.comments.map(c => <Comment comment={c} key={c.id} />)}
+              {this.props.comment.get('comments').map(c => <Comment comment={c} key={c.get('id')} />)}
             </View>
           </View>
           {this.state.collapsed &&
@@ -58,7 +59,7 @@ class Comment extends Component {
 
 class Comments extends Component {
   props: {
-    story: Story,
+    story: Immutable.Map,
     dispatch: any,
     navigator: any
   };
@@ -66,10 +67,10 @@ class Comments extends Component {
 
   constructor(props) {
     super(props);
-    props.dispatch(requestStory(props.story.id));
+    props.dispatch(requestStory(props.story.get('id')));
   }
 
-  showStory(story: Story) {
+  showStory(story) {
     this.props.navigator.push({
       component: Article,
       passProps: { story }
@@ -80,7 +81,7 @@ class Comments extends Component {
     return <View style={{flex: 1}}>
         <ItemSummary story={this.props.story} showStory={this.showStory.bind(this)} back={() => this.props.navigator.pop()} />
         <ScrollView style={{flex: 1}}>
-          {(this.props.story.comments || []).map(c => <Comment comment={c} key={c.id} topLevel={true} />)}
+          {(this.props.story.get('comments') || []).map(c => <Comment comment={c} key={c.get('id')} topLevel={true} />)}
         </ScrollView>
       </View>;
   }
@@ -100,6 +101,6 @@ var commentStyles = StyleSheet.create({
 })
 
 function mapStateToProps(state) {
-  return { story: state.getIn(['stories', state.get('currentStoryId')]).toJS() }
+  return { story: state.getIn(['stories', state.get('currentStoryId')]) }
 }
 module.exports = connect(mapStateToProps)(Comments);
