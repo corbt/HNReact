@@ -1,9 +1,9 @@
 /* @flow */
 
-var Redux = require('redux');
+const Redux = require('redux');
 
-var TOP_STORIES_REFRESHING = 'TOP_STORIES_REFRESHING';
-var SET_TOP_STORIES = 'SET_TOP_STORIES';
+const TOP_STORIES_REFRESHING = 'TOP_STORIES_REFRESHING';
+const SET_TOP_STORIES = 'SET_TOP_STORIES';
 function requestTopStories(): any {
   return (dispatch) => {
     dispatch({type: TOP_STORIES_REFRESHING, value: true});
@@ -27,12 +27,12 @@ function requestStory(storyId: number): (dispatch: any) => void {
   }
 }
 
-var UPDATE_STORY = 'UPDATE_STORY';
+const UPDATE_STORY = 'UPDATE_STORY';
 function updateStory(storyId: number, attributes: Object): Action {
   return { type: UPDATE_STORY, value: { storyId, attributes } };
 }
 
-var SET_CURRENT_STORY = 'SET_CURRENT_STORY';
+const SET_CURRENT_STORY = 'SET_CURRENT_STORY';
 function setCurrentStory(storyId: number): Action {
   return { type: SET_CURRENT_STORY, value: storyId };
 }

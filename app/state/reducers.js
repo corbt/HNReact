@@ -1,7 +1,7 @@
 /* @flow */
 
-var Immutable = require('immutable');
-var actions = require('./actions');
+const Immutable = require('immutable');
+const actions = require('./actions');
 
 function initialState(): Immutable.Map {
   return new Immutable.fromJS({

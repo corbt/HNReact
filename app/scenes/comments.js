@@ -1,7 +1,7 @@
 /* @flow */
 
-var React = require('react-native');
-var {
+const React = require('react-native');
+let {
   Component,
   View,
   WebView,
@@ -13,13 +13,13 @@ var {
   ListView,
 } = React;
 
-var Immutable = require('immutable');
-var { connect } = require('react-redux/native');
+const Immutable = require('immutable');
+let { connect } = require('react-redux/native');
 
-var Article = require('./article');
+const Article = require('./article');
 
-var ItemSummary = require('../components/ItemSummary');
-var { requestStory } = require('../state/actions');
+const ItemSummary = require('../components/ItemSummary');
+let { requestStory } = require('../state/actions');
 
 class Comment extends Component {
   props: {
@@ -83,7 +83,7 @@ class Comments extends Component {
   }
 
   render() {
-    var dataSource = this.state.dataSource.cloneWithRows((this.props.story.get('comments') || Immutable.List()).toArray());
+    const dataSource = this.state.dataSource.cloneWithRows((this.props.story.get('comments') || Immutable.List()).toArray());
 
     return <View style={{flex: 1}}>
         <ItemSummary story={this.props.story} showStory={this.showStory.bind(this)} back={() => this.props.navigator.pop()} />
@@ -94,7 +94,7 @@ class Comments extends Component {
   }
 }
 
-var commentStyles = StyleSheet.create({
+const commentStyles = StyleSheet.create({
   commentBase: {
     paddingTop: 10,
     backgroundColor: 'white'

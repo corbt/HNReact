@@ -1,15 +1,12 @@
 /* @flow */
 
-var Redux = require('redux');
-var { createStore, applyMiddleware } = Redux;
-var thunk = require('redux-thunk');
+const Redux = require('redux');
+let { createStore, applyMiddleware } = Redux;
+const thunk = require('redux-thunk');
 
-var reducer = require('./reducers');
+const reducer = require('./reducers');
 
-//TMP
-var actions = require('./actions');
-
-var logger = store => next => action => {
+const logger = store => next => action => {
   if(console.groupCollapsed)
     console.groupCollapsed(action.type);
   console.info('dispatching', action);
@@ -20,8 +17,6 @@ var logger = store => next => action => {
   return result;
 };
 
-var createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
+const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
-var store = createStoreWithMiddleware(reducer);
-
-module.exports = store;
+module.exports = createStoreWithMiddleware(reducer);;

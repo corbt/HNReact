@@ -1,8 +1,8 @@
 /* @flow */
 
-var React = require('react-native');
+const React = require('react-native');
 
-var {
+let {
   Component,
   Text,
   View,
@@ -11,15 +11,15 @@ var {
   ListView
 } = React;
 
-var Immutable = require('immutable');
-var { connect } = require('react-redux/native');
+const Immutable = require('immutable');
+let { connect } = require('react-redux/native');
 
-var Article = require('./article');
-var Comments = require('./comments');
+const Article = require('./article');
+const Comments = require('./comments');
 
-var ItemSummary = require('../components/ItemSummary');
+const ItemSummary = require('../components/ItemSummary');
 
-var { setCurrentStory, requestTopStories } = require('../state/actions');
+let { setCurrentStory, requestTopStories } = require('../state/actions');
 
 class Index extends Component {
   constructor(props) {
@@ -49,7 +49,7 @@ class Index extends Component {
   }
 
   render() {
-    var dataSource = this.state.dataSource.cloneWithRows(this.props.store.getIn(['topStories', 'stories']).toJS().map(storyId => this.props.store.getIn(['stories', storyId])))
+    const dataSource = this.state.dataSource.cloneWithRows(this.props.store.getIn(['topStories', 'stories']).toJS().map(storyId => this.props.store.getIn(['stories', storyId])))
     return (
       <ListView dataSource={dataSource} renderRow={story =>
         <ItemSummary story={story} key={story.get('id')}

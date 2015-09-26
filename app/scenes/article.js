@@ -1,8 +1,8 @@
 /* @flow */
 
-var React = require('react-native');
+const React = require('react-native');
 
-var {
+let {
   Component,
   View,
   WebView,
