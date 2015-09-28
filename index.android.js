@@ -12,6 +12,7 @@ var {
 
 var Index = require('./app/scenes/index');
 var Comments = require('./app/scenes/comments');
+var FormattedText = require('./app/components/FormattedText');
 
 var store = require('./app/state/store');
 

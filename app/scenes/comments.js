@@ -19,6 +19,7 @@ let { connect } = require('react-redux/native');
 const Article = require('./article');
 
 const ItemSummary = require('../components/ItemSummary');
+const FormattedText = require('../components/FormattedText');
 let { requestStory } = require('../state/actions');
 
 class Comment extends Component {
@@ -42,7 +43,7 @@ class Comment extends Component {
         </View>
         <View style={this.state.collapsed && {height: 40}}>
           <View style={this.state.collapsed && {opacity: 0.1}}>
-            <Text style={{color: 'black'}}>{this.props.comment.get('content')}</Text>
+            <FormattedText style={{color: 'black'}}>{this.props.comment.get('content')}</FormattedText>
             <View style={{paddingLeft: 10, paddingBottom: 10}}>
               {this.props.comment.get('comments').map(c => <Comment comment={c} key={c.get('id')} />)}
             </View>
