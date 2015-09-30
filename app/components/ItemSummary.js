@@ -17,7 +17,8 @@ type itemSummaryProps = {
   story: Immutable.Map,
   showStory: (s: Story) => void,
   showComments: (s: Story) => void,
-  back: () => void
+  back: () => void,
+  style: Object,
 }
 
 class ItemSummary extends Component {
@@ -45,7 +46,7 @@ class ItemSummary extends Component {
     const separator = <Text style={{fontSize: 15, color: 'black'}}> &bull; </Text>;
     return (
       // <Text>hello world</Text>
-      <View style={{borderBottomWidth: 1, borderBottomColor: '#FFB65D', flexDirection: 'row', alignItems: 'stretch', backgroundColor: 'white', height: 100}}>
+      <View style={[{borderBottomWidth: 1, borderBottomColor: '#FFB65D', flexDirection: 'row', alignItems: 'stretch', backgroundColor: 'white', height: 100}, this.props.style]}>
         {backView}
         <TouchableNativeFeedback onPress={() => this.props.showStory(this.props.story)}>
           <View style={{flex: 1, padding: 10, justifyContent: 'center'}}>
