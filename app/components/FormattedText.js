@@ -1,7 +1,5 @@
 // Formats text from the very basic subset of HTML allowed in HN comments
 
-'use strict';
-
 const React = require('react-native');
 let { Parser } = require('parse5');
 
@@ -28,9 +26,8 @@ function formatNode(node, index) {
     case "#text":
       return node.value;
     case "i":
-      return <Text key={index} style={[textStyles.i]}>{node.childNodes.map((n, i) => formatNode(n, i))}</Text>;
     case "b":
-      return <Text key={index} style={[textStyles.b]}>{node.childNodes.map((n, i) => formatNode(n, i))}</Text>;
+      return <Text key={index} style={[textStyles[node.nodeName]]}>{node.childNodes.map((n, i) => formatNode(n, i))}</Text>;
     case "a":
       return <Text key={index} onPress={() => console.log('hooray!')} style={[textStyles.a]}>{node.childNodes.map((n, i) => formatNode(n))}</Text>;
   }
