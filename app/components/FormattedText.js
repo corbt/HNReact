@@ -1,14 +1,7 @@
 // Formats text from the very basic subset of HTML allowed in HN comments
 
-const React = require('react-native');
-let { Parser } = require('parse5');
-
-let {
-  Component,
-  Text,
-  StyleSheet,
-  View,
-} = React;
+import React, { Component, Text, StyleSheet, View } from 'react-native';
+import { Parser } from 'parse5';
 
 const textStyles = StyleSheet.create({
   i: {fontStyle: 'italic'},
@@ -33,7 +26,7 @@ function formatNode(node, index) {
   }
 }
 
-module.exports = class FormattedText extends Component {
+export default class FormattedText extends Component {
   constructor() {
     super();
     this.state = { parser: new Parser() };

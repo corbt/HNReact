@@ -1,10 +1,8 @@
 /* @flow */
 
-const Redux = require('redux');
-let { createStore, applyMiddleware } = Redux;
-const thunk = require('redux-thunk');
-
-const reducer = require('./reducers');
+import Redux, { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import reducer from './reducers';
 
 const logger = store => next => action => {
   if(console.groupCollapsed)
@@ -19,4 +17,4 @@ const logger = store => next => action => {
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
-module.exports = createStoreWithMiddleware(reducer);;
+export default createStoreWithMiddleware(reducer);;

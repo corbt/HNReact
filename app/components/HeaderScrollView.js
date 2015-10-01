@@ -1,16 +1,8 @@
 /* @flow */
 
-const React = require('react-native');
+import React, { Component, Text, StyleSheet, View, ScrollView } from 'react-native';
 
-let {
-  Component,
-  Text,
-  StyleSheet,
-  View,
-  ScrollView,
-} = React;
-
-module.exports = class HeaderScrollView extends Component {
+export default class HeaderScrollView extends Component {
   constructor() {
     super();
     this.state = {headerHeight: 0, top: 0, scrollOffset: 0}

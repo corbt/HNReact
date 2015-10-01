@@ -1,7 +1,7 @@
 /* @flow */
 
-const Immutable = require('immutable');
-const actions = require('./actions');
+import Immutable from 'immutable';
+import * as actions from './actions';
 
 function initialState(): Immutable.Map {
   return new Immutable.fromJS({
@@ -15,7 +15,7 @@ function initialState(): Immutable.Map {
   });
 }
 
-function reducer(state: Immutable.Map = initialState(), action: Action): Immutable.Map {
+export default function reducer(state: Immutable.Map = initialState(), action: Action): Immutable.Map {
   // console.log(state.toJS())
   switch(action.type) {
     case actions.TOP_STORIES_REFRESHING:
@@ -39,5 +39,3 @@ function reducer(state: Immutable.Map = initialState(), action: Action): Immutab
       return state;
   }
 }
-
-module.exports = reducer;

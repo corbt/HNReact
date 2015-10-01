@@ -1,10 +1,10 @@
 /* @flow */
 
-const Redux = require('redux');
+import Redux from 'redux';
 
-const TOP_STORIES_REFRESHING = 'TOP_STORIES_REFRESHING';
-const SET_TOP_STORIES = 'SET_TOP_STORIES';
-function requestTopStories(): any {
+export const TOP_STORIES_REFRESHING = 'TOP_STORIES_REFRESHING';
+export const SET_TOP_STORIES = 'SET_TOP_STORIES';
+export function requestTopStories(): any {
   return (dispatch) => {
     dispatch({type: TOP_STORIES_REFRESHING, value: true});
 
@@ -17,7 +17,7 @@ function requestTopStories(): any {
   }
 }
 
-function requestStory(storyId: number): (dispatch: any) => void {
+export function requestStory(storyId: number): (dispatch: any) => void {
   return (dispatch) => {
     dispatch(updateStory(storyId, {isRefreshing: true}))
 
@@ -27,18 +27,12 @@ function requestStory(storyId: number): (dispatch: any) => void {
   }
 }
 
-const UPDATE_STORY = 'UPDATE_STORY';
+export const UPDATE_STORY = 'UPDATE_STORY';
 function updateStory(storyId: number, attributes: Object): Action {
   return { type: UPDATE_STORY, value: { storyId, attributes } };
 }
 
-const SET_CURRENT_STORY = 'SET_CURRENT_STORY';
-function setCurrentStory(storyId: number): Action {
+export const SET_CURRENT_STORY = 'SET_CURRENT_STORY';
+export function setCurrentStory(storyId: number): Action {
   return { type: SET_CURRENT_STORY, value: storyId };
-}
-
-module.exports = {
-  TOP_STORIES_REFRESHING, SET_TOP_STORIES, requestTopStories,
-  UPDATE_STORY, requestStory,
-  SET_CURRENT_STORY, setCurrentStory,
 }

@@ -1,22 +1,13 @@
 /* @flow */
 
-var React = require('react-native');
-var {
-  Component,
-  AppRegistry,
-  Text,
-  Navigator,
-  ToolbarAndroid,
-  BackAndroid
-} = React;
+import React, { Component, AppRegistry, Text, Navigator, ToolbarAndroid, BackAndroid } from 'react-native';
+import { Provider } from 'react-redux/native';
 
-var Index = require('./app/scenes/index');
-var Comments = require('./app/scenes/comments');
-var FormattedText = require('./app/components/FormattedText');
+import Index from './app/scenes/index';
+import Comments from './app/scenes/comments';
+import FormattedText from './app/components/FormattedText';
 
-var store = require('./app/state/store');
-
-var { Provider } = require('react-redux/native');
+import store from './app/state/store';
 
 var _navigator;
 BackAndroid.addEventListener('hardwareBackPress', () => {

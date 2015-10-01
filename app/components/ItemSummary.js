@@ -1,17 +1,8 @@
 /* @flow */
 
-const React = require('react-native');
-
-let {
-  Component,
-  Text,
-  View,
-  TouchableNativeFeedback,
-  Image,
-} = React;
-
-const Immutable = require('immutable');
-let { connect } = require('react-redux/native');
+import React, { Component, Text, View, TouchableNativeFeedback, Image } from 'react-native';
+import Immutable from 'immutable';
+import { connect } from 'react-redux/native';
 
 type itemSummaryProps = {
   story: Immutable.Map,
@@ -21,7 +12,7 @@ type itemSummaryProps = {
   style: Object,
 }
 
-class ItemSummary extends Component {
+export default class ItemSummary extends Component {
   props: itemSummaryProps;
   static defaultProps: {};
 
@@ -65,5 +56,3 @@ class ItemSummary extends Component {
     );
   }
 }
-
-module.exports = ItemSummary;

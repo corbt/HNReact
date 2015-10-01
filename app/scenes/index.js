@@ -1,25 +1,14 @@
 /* @flow */
 
-const React = require('react-native');
+import React, { Component, Text, View, TouchableHighlight, ScrollView, ListView } from 'react-native';
+import { connect } from 'react-redux/native';
 
-let {
-  Component,
-  Text,
-  View,
-  TouchableHighlight,
-  ScrollView,
-  ListView
-} = React;
+import Article from './article';
+import Comments from './comments';
 
-const Immutable = require('immutable');
-let { connect } = require('react-redux/native');
+import ItemSummary from '../components/ItemSummary';
 
-const Article = require('./article');
-const Comments = require('./comments');
-
-const ItemSummary = require('../components/ItemSummary');
-
-let { setCurrentStory, requestTopStories } = require('../state/actions');
+import { setCurrentStory, requestTopStories } from '../state/actions';
 
 class Index extends Component {
   constructor(props) {
@@ -62,4 +51,4 @@ class Index extends Component {
   }
 }
 
-module.exports = connect(store => { return { store } })(Index);
+export default connect(store => { return { store } })(Index);

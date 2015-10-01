@@ -1,15 +1,8 @@
 /* @flow */
 
-const React = require('react-native');
+import React, { Component, View, WebView, Text } from 'react-native';
 
-let {
-  Component,
-  View,
-  WebView,
-  Text,
-} = React;
-
-module.exports = class Article extends Component {
+export default class Article extends Component {
   render() {
     return (
       <Text>{this.props.story.url}+{__DEV__.toString()}</Text>
