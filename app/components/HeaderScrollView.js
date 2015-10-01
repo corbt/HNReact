@@ -27,13 +27,14 @@ module.exports = class HeaderScrollView extends Component {
     // top >= -scrollOffset
     stateUpdate.top = Math.max(Math.min(this.state.top - deltaOffset, 0), -this.state.headerHeight, -scrollOffset);
     this.setState(stateUpdate);
+    // console.log("delta", deltaOffset, "update", stateUpdate);
   }
 
   render() {
     let { style, header, children, ...props } = this.props;
     return <View style={style}>
       <ScrollView {...props}
-        style={[style, {top: 0, bottom: 0, left: 0, right: 0, position: 'absolute', paddingTop: this.state.headerHeight}]}
+        style={[style, {top: 0, bottom: 0, left: 0, right: 0, position: 'absolute', paddingTop: this.state.headerHeight+this.state.top}]}
         onScroll={this.reactToScroll.bind(this)}>
         {children}
       </ScrollView>
