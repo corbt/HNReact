@@ -66,7 +66,7 @@ class Comments extends Component {
     };
   }
 
-  showStory(story) {
+  showStory(story: Immutable.Map) {
     this.props.navigator.push({
       component: Article,
       passProps: { story }

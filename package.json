@@ -11,6 +11,7 @@
     "parse5": "^1.5.0",
     "react": "^0.13.3",
     "react-native": "^0.11.0",
+    "react-native-webintent": "^1.0.2",
     "react-redux": "^2.1.2",
     "redux": "^3.0.0",
     "redux-thunk": "^1.0.0"

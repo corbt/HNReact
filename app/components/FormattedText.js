@@ -1,7 +1,8 @@
 // Formats text from the very basic subset of HTML allowed in HN comments
 
-import React, { Component, Text, StyleSheet, View } from 'react-native';
+import React, { Component, Text, StyleSheet, View, TouchableHighlight } from 'react-native';
 import { Parser } from 'parse5';
+import WebIntent from 'react-native-webintent';
 
 const textStyles = StyleSheet.create({
   i: {fontStyle: 'italic'},
@@ -22,7 +23,11 @@ function formatNode(node, index) {
     case "b":
       return <Text key={index} style={[textStyles[node.nodeName]]}>{node.childNodes.map((n, i) => formatNode(n, i))}</Text>;
     case "a":
-      return <Text key={index} onPress={() => console.log('hooray!')} style={[textStyles.a]}>{node.childNodes.map((n, i) => formatNode(n))}</Text>;
+      return <Text key={index}
+                   onPress={() => WebIntent.open(node.attrs.filter(attr => attr.name == 'href')[0].value) }
+                   style={[textStyles.a]}>
+                   {node.childNodes.map((n, i) => formatNode(n))}
+              </Text>;
   }
 }
 
