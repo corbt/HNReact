@@ -2,6 +2,7 @@
 
 import React, { Component, Text, View, TouchableHighlight, ScrollView, ListView } from 'react-native';
 import { connect } from 'react-redux/native';
+import WebIntent from 'react-native-webintent';
 
 import Article from './article';
 import Comments from './comments';
@@ -22,11 +23,13 @@ class Index extends Component {
   }
 
   showStory(story) {
-    this.props.navigator.push({
-      component: Article,
-      passProps: { story }
-    });
-    this.props.dispatch(setCurrentStory(story.get('id')));
+    WebIntent.open(story.get('url'));
+
+    // this.props.navigator.push({
+    //   component: Article,
+    //   passProps: { story }
+    // });
+    // this.props.dispatch(setCurrentStory(story.get('id')));
   }
 
   showComments(story) {

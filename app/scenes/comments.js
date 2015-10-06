@@ -3,7 +3,7 @@
 import React, { Component, View, WebView, Text, ToolbarAndroid, TouchableNativeFeedback, ScrollView, StyleSheet, ListView } from 'react-native';
 import Immutable from 'immutable';
 import { connect } from 'react-redux/native';
-import timeAgo from '../helpers/TimeAgo';
+import WebIntent from 'react-native-webintent';
 
 import Article from './article';
 
@@ -11,6 +11,7 @@ import ItemSummary from '../components/ItemSummary';
 import FormattedText from '../components/FormattedText';
 import HeaderScrollView from '../components/HeaderScrollView';
 import { requestStory } from '../state/actions';
+import timeAgo from '../helpers/TimeAgo';
 
 class Comment extends Component {
   props: {
@@ -67,10 +68,12 @@ class Comments extends Component {
   }
 
   showStory(story: Immutable.Map) {
-    this.props.navigator.push({
-      component: Article,
-      passProps: { story }
-    });
+    WebIntent.open(story.get('url'));
+
+    // this.props.navigator.push({
+    //   component: Article,
+    //   passProps: { story }
+    // });
   }
 
   render() {
