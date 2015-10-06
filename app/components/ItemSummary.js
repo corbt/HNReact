@@ -4,6 +4,8 @@ import React, { Component, Text, View, TouchableNativeFeedback, Image } from 're
 import Immutable from 'immutable';
 import { connect } from 'react-redux/native';
 
+import timeAgo from '../helpers/TimeAgo';
+
 type itemSummaryProps = {
   story: Immutable.Map,
   showStory: (s: Story) => void,
@@ -41,13 +43,13 @@ export default class ItemSummary extends Component {
         {backView}
         <TouchableNativeFeedback onPress={() => this.props.showStory(this.props.story)}>
           <View style={{flex: 1, padding: 10, justifyContent: 'center'}}>
-            <Text style={{fontSize: 15, color: 'black'}}>{this.props.story.get('title')}</Text>
+            <Text style={{fontSize: 18, color: 'black'}}>{this.props.story.get('title')}</Text>
             <View style={{flexDirection: 'row'}}>
               <Text>{this.props.story.get('points')} points</Text>
               {separator}
               <Text>{this.props.story.get('user')}</Text>
               {separator}
-              <Text>{this.props.story.get('time_ago')}</Text>
+              <Text>{timeAgo(this.props.story.get('time'))}</Text>
             </View>
           </View>
         </TouchableNativeFeedback>

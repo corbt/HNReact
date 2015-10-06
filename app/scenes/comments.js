@@ -3,6 +3,7 @@
 import React, { Component, View, WebView, Text, ToolbarAndroid, TouchableNativeFeedback, ScrollView, StyleSheet, ListView } from 'react-native';
 import Immutable from 'immutable';
 import { connect } from 'react-redux/native';
+import timeAgo from '../helpers/TimeAgo';
 
 import Article from './article';
 
@@ -24,15 +25,15 @@ class Comment extends Component {
   }
 
   render() {
-    return (<TouchableNativeFeedback onPress={() => this.setState({collapsed: !this.state.collapsed})}>
+    return (<TouchableNativeFeedback onPress={() => this.setState({collapsed: !this.state.collapsed})} onLongPress={() => console.log("long!!!")}>
       <View style={[commentStyles.commentBase, this.props.topLevel && commentStyles.commentTopLevel]}>
         <View style={{flexDirection: 'row', paddingBottom: 5}}>
           <Text style={{flex: 1, fontSize: 15, color: '#bf223f', fontWeight: 'bold'}}>{this.props.comment.get('user')}</Text>
-          <Text>{this.props.comment.time_ago}</Text>
+          <Text>{timeAgo(this.props.comment.get('time'))}</Text>
         </View>
         <View style={this.state.collapsed && {height: 40}}>
           <View style={this.state.collapsed && {opacity: 0.1}}>
-            <FormattedText style={{color: 'black'}}>{this.props.comment.get('content')}</FormattedText>
+            <FormattedText style={{color: 'black', fontSize: 17}}>{this.props.comment.get('content')}</FormattedText>
             <View style={{paddingLeft: 10, paddingBottom: 10}}>
               {this.props.comment.get('comments').map(c => <Comment comment={c} key={c.get('id')} />)}
             </View>
