@@ -10,6 +10,7 @@ import Article from './article';
 import ItemSummary from '../components/ItemSummary';
 import FormattedText from '../components/FormattedText';
 import HeaderScrollView from '../components/HeaderScrollView';
+import Notification from '../components/Notification';
 import { requestStory } from '../state/actions';
 import timeAgo from '../helpers/TimeAgo';
 
@@ -28,14 +29,15 @@ class Comment extends Component {
   render() {
     return (<TouchableNativeFeedback onPress={() => this.setState({collapsed: !this.state.collapsed})} onLongPress={() => console.log("long!!!")}>
       <View style={[commentStyles.commentBase, this.props.topLevel && commentStyles.commentTopLevel]}>
+        {this.props.comment.get('new') && <Notification style={{position: 'absolute', left: 2, top: 18}} />}
         <View style={{flexDirection: 'row', paddingBottom: 5}}>
-          <Text style={{flex: 1, fontSize: 15, color: '#bf223f', fontWeight: 'bold'}}>{this.props.comment.get('user')}</Text>
+          <Text style={{flex: 1, fontSize: 15, color: 'gray', fontWeight: 'bold'}}>{this.props.comment.get('user')}</Text>
           <Text>{timeAgo(this.props.comment.get('time'))}</Text>
         </View>
         <View style={this.state.collapsed && {height: 40}}>
           <View style={this.state.collapsed && {opacity: 0.1}}>
             <FormattedText style={{color: 'black', fontSize: 17}}>{this.props.comment.get('content')}</FormattedText>
-            <View style={{paddingLeft: 10, paddingBottom: 10}}>
+            <View style={{paddingBottom: 10}}>
               {this.props.comment.get('comments').map(c => <Comment comment={c} key={c.get('id')} />)}
             </View>
           </View>
@@ -79,24 +81,32 @@ class Comments extends Component {
   render() {
     const dataSource = this.state.dataSource.cloneWithRows((this.props.story.get('comments') || Immutable.List()).toArray());
 
-    return <HeaderScrollView style={{flex: 1}} header={<ItemSummary story={this.props.story} showStory={this.showStory.bind(this)} back={() => this.props.navigator.pop()}/>}>
-        <ListView style={{flex: 1}} dataSource={dataSource} renderRow={comment =>
-          <Comment comment={comment} key={comment.get('id')} topLevel={true} /> }>
-        </ListView>
-      </HeaderScrollView>;
+    return (
+      <HeaderScrollView
+        style={{flex: 1}}
+        header={<ItemSummary story={this.props.story} showStory={this.showStory.bind(this)} back={() => this.props.navigator.pop()}/>}
+        >
+          <ListView
+            style={{flex: 1}}
+            dataSource={dataSource}
+            renderRow={comment =>
+              <Comment comment={comment} key={comment.get('id')} topLevel={true} /> }
+            />
+        </HeaderScrollView>
+    );
   }
 }
 
 const commentStyles = StyleSheet.create({
   commentBase: {
     paddingTop: 10,
+    paddingLeft: 10,
     backgroundColor: 'white'
   },
   commentTopLevel: {
     borderBottomColor: 'gray',
     borderBottomWidth: 1,
     paddingRight: 10,
-    paddingLeft: 10,
   },
 })
 

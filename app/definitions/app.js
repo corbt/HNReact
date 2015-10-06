@@ -20,4 +20,6 @@ type Story = {
   comments_count: number,
   points: number,
   time_ago: string,
+  isRefreshing: boolean,
+  lastRefresh: number,
 }

@@ -2,7 +2,9 @@
 
 import React, { Component, Text, StyleSheet, View, ScrollView } from 'react-native';
 
-export default class HeaderScrollView extends Component {
+// TODO define prop types Flow
+
+class HeaderScrollView extends Component {
   constructor() {
     super();
     this.state = {headerHeight: 0, top: 0, scrollOffset: 0}
@@ -19,7 +21,8 @@ export default class HeaderScrollView extends Component {
     // top >= -scrollOffset
     stateUpdate.top = Math.max(Math.min(this.state.top - deltaOffset, 0), -this.state.headerHeight, -scrollOffset);
     this.setState(stateUpdate);
-    // console.log("delta", deltaOffset, "update", stateUpdate);
+
+    this.props.onScroll(e);
   }
 
   render() {
@@ -36,3 +39,9 @@ export default class HeaderScrollView extends Component {
     </View>;
   }
 }
+
+HeaderScrollView.defaultProps = {
+  onScroll: () => {}
+};
+
+export default HeaderScrollView;

@@ -23,7 +23,10 @@ export function requestStory(storyId: number): (dispatch: any) => void {
 
     fetch(`http://node-hnapi.herokuapp.com/item/${storyId}`)
       .then(response => response.json())
-      .then((story: Story) => dispatch(updateStory(story.id, story)));
+      .then((story: Story) => {
+        story.isRefreshing = false;
+        dispatch(updateStory(story.id, story))
+      });
   }
 }
 
