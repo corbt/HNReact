@@ -12,6 +12,7 @@ function initialState(): Immutable.Map {
       isRefreshing: false,
       stories: []
     },
+    followedUsers: Immutable.Set(),
   });
 }
 
@@ -51,6 +52,14 @@ export default function reducer(state: Immutable.Map = initialState(), action: A
 
     case actions.SET_CURRENT_STORY:
       return state.set('currentStoryId', action.value);
+
+    case actions.FOLLOW_USER:
+      return state.update('followedUsers', followedUsers => {
+        if(action.value.follow)
+          return followedUsers.add(action.value.user);
+        else
+          return followedUsers.delete(action.value.user);
+      });
 
     case "@@redux/INIT":
       return state;

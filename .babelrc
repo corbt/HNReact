@@ -24,6 +24,7 @@
     // Not included by default in RN 0.11
     "es6.modules",
     "es7.classProperties",
+    "es7.decorators",
   ],
   "sourceMaps": false
 }

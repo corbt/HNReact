@@ -39,3 +39,8 @@ export const SET_CURRENT_STORY = 'SET_CURRENT_STORY';
 export function setCurrentStory(storyId: number): Action {
   return { type: SET_CURRENT_STORY, value: storyId };
 }
+
+export const FOLLOW_USER = 'FOLLOW_USER';
+export function followUser(user: string, follow: boolean): Action {
+  return { type: FOLLOW_USER, value: { user, follow }}
+}
